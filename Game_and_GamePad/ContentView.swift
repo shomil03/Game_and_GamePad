@@ -29,7 +29,7 @@ struct ContentView: View {
     init() {
         let configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
-        let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/")!
+        let url = URL(string: "ws://192.168.135.220:3000/player")!
         websocket = session.webSocketTask(with: url)
         delegate = WebSocketDelegate(websocket: websocket)
         websocket?.delegate = delegate
