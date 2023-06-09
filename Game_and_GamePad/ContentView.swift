@@ -174,7 +174,7 @@ struct ContentView: View {
    
     
     func printf(){
-        print("pressed:- \(pressed)")
+//        print("pressed:- \(pressed)")
     }
     
     func ping() {
@@ -220,6 +220,7 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
 //    pressed: true
     func send(direction:Bool , status:Bool){
         let json="{\"direction\": \(direction),\"pressed\":\(status)}"
+        print(json)
         websocket?.send(.string(json), completionHandler: {error in
             if let error=error{
                 print("Send error \(error)")
