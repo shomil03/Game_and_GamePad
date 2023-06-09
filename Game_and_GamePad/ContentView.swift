@@ -5,10 +5,7 @@
 //  Created by Shomil Singh on 30/05/23.
 //
 
-//[
-//    "direction" : true, // true means upward, false means down
-//    "pressed" : true // true means pressed, false means released
-//]
+
 
 import SwiftUI
 
@@ -59,7 +56,7 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .padding(25)
                     Spacer()
-//                Text("\(button) was \(status)")
+
                
       
                 VStack{
@@ -67,18 +64,16 @@ struct ContentView: View {
 
                     Button()
                     {
-                        pressed.toggle()
-                        printf()
-
+                        
                     }label:{
                         Label("UP",systemImage: "arrowtriangle.up.fill")
-                            .font(.custom("Arial", size: 70))
                             .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
-                            .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
+                    }
+                    .font(.custom("Arial", size: 70))
+                    .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
                                 {_ in
                                     button="UP"
                                     status=true
-//                                    print("Up button was pressed")
                                     direction=true
                                     send()
                                     
@@ -88,22 +83,14 @@ struct ContentView: View {
                                     status=false
                                     direction=true
                                     send()
-//                                    print("Up button was released")
                                 }))
-                            
-                            
-                            
-                    }.focused($pressed)
-
+                    .focused($pressed)
                     .padding(20)
-                    
-                   
                     Spacer()
                   
                     Button()
                     {
-                       printf()
-                        
+                                               
                     }label:{
                         Label("Down",systemImage: "arrowtriangle.down.fill")
                             .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
@@ -115,7 +102,7 @@ struct ContentView: View {
                             button="Down"
                             status=true
                             direction=false
-//                            print("Down button was pressed")
+
                             send()
                         })
                         .onEnded({_ in
@@ -123,8 +110,9 @@ struct ContentView: View {
                             status=false
                             direction=false
                             send()
-//                            print("Down button was released")
+
                         }))
+                    
               
                 }
                 .frame(minWidth: 100, maxWidth: .infinity, minHeight: 300,maxHeight:300)
@@ -134,49 +122,12 @@ struct ContentView: View {
                     Spacer()
                 }
             
-           
-              
-//
-//=
-//
-//                Button("Send data")
-//                {
-//                    send()
-//                }
-//                .fontWeight(.bold)
-//                .font(.title)
-//                .foregroundColor(Color.indigo)
-//                .buttonStyle(.bordered)
-//                .padding()
-//
-//                Button("Receive data")
-//                {
-//                    receive()
-//                }
-//                .font(.title)
-//                .buttonStyle(.bordered)
-//
-//                .foregroundColor(Color.orange)
-//
-//                .padding()
-//                Spacer()
-//                Spacer()
-                
-                
-                
+  
             
         }
             
     }
-    func printstatus(){
-        
-    }
    
-    
-    func printf(){
-//        print("pressed:- \(pressed)")
-    }
-    
     func ping() {
         delegate?.ping()
     }
@@ -216,8 +167,6 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
     func close(){
         websocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
     }
-//    direction: true
-//    pressed: true
     func send(direction:Bool , status:Bool){
         let json="{\"direction\": \(direction),\"pressed\":\(status)}"
         print(json)
