@@ -10,6 +10,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @State private var ispressed:Bool=false
     @State private var direction:Bool=false
     
@@ -39,43 +40,42 @@ struct ContentView: View {
     
     @State var status:Bool=false
     var body: some View {
-       
         ZStack{
-
-            let color1 = Color(red: 255/255, green: 216/255, blue: 155/255)
-            let color2 = Color(red: 25/255, green: 84/255, blue: 123/255)
-            LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .topLeading, endPoint: .bottomLeading)
-                .ignoresSafeArea()
-            
-            
-
-            VStack {
-                
-                
-                Text("GameAndGamepad")
-                    .foregroundColor(Color.black)
-                    .bold()
-                    .font(.largeTitle)
-                    .padding(25)
-                    Spacer()
-
-               
-      
-                VStack{
                     
-                   
-
-                    Button()
-                    {
+                    let color1 = Color(red: 255/255, green: 216/255, blue: 155/255)
+                    let color2 = Color(red: 25/255, green: 84/255, blue: 123/255)
+                    LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .topLeading, endPoint: .bottomLeading)
+                        .ignoresSafeArea()
+                    
+                    
+                    
+                    VStack {
                         
-                    }label:{
-                        Label("UP",systemImage: "arrowtriangle.up.fill")
-                            .foregroundColor(upstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
+                        
+                        Text("GameAndGamepad")
+                            .foregroundColor(Color.black)
+                            .bold()
+                            .font(.largeTitle)
+                            .padding(25)
+                        Spacer()
+                        
+                        
+                        
+                        VStack{
                             
-                    }
-                    
-                    .font(.custom("Arial", size: 70))
-                    .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
+                            
+                            
+                            Button()
+                            {
+                                
+                            }label:{
+                                Label("UP",systemImage: "arrowtriangle.up.fill")
+                                    .foregroundColor(upstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
+                                
+                            }
+                            
+                            .font(.custom("Arial", size: 70))
+                            .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
                                 {_ in
                                     button="UP"
                                     status=true
@@ -91,54 +91,60 @@ struct ContentView: View {
                                     upstatus.toggle()
                                     send()
                                 }))
-                    .focused($pressed)
-                    .padding(20)
-                    Spacer()
-                  
-                    Button()
-                    {
+                            .focused($pressed)
+                            .padding(20)
+                            Spacer()
+                            
+                            Button()
+                            {
+                                
+                                
+                            }label:{
+                                Label("Down",systemImage: "arrowtriangle.down.fill")
+                                
+                                    .foregroundColor(downstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
+                                
+                            }
+                            .padding(35)
+                            .font(.custom("Arial", size: 70))
+                            .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
+                                {_ in
+                                    button="Down"
+                                    status=true
+                                    direction=false
+                                    downstatus.toggle()
+                                    
+                                    send()
+                                })
+                                .onEnded({_ in
+                                    button="Down"
+                                    status=false
+                                    direction=false
+                                    downstatus.toggle()
+                                    send()
+                                    
+                                    
+                                }))
+                            
+                            
+                        }
+                        .frame(minWidth: 100, maxWidth: .infinity, minHeight: 300,maxHeight:300)
                         
-                                               
-                    }label:{
-                        Label("Down",systemImage: "arrowtriangle.down.fill")
-//
-                            .foregroundColor(downstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
                         
+                        .padding(20)
+                        Spacer()
                     }
-                    .padding(35)
-                    .font(.custom("Arial", size: 70))
-                    .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
-                        {_ in
-                            button="Down"
-                            status=true
-                            direction=false
-                            downstatus.toggle()
-
-                            send()
-                        })
-                        .onEnded({_ in
-                            button="Down"
-                            status=false
-                            direction=false
-                            send()
-                            downstatus.toggle()
-
-                        }))
                     
-              
-                }
-                .frame(minWidth: 100, maxWidth: .infinity, minHeight: 300,maxHeight:300)
+                    
+                    
                 
-
-                .padding(20)
-                    Spacer()
-                }
+                
             
-  
             
         }
-            
+       
     }
+       
    
     func ping() {
         delegate?.ping()
