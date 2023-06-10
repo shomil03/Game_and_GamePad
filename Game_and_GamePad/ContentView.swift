@@ -26,14 +26,20 @@ struct ContentView: View {
                     NavigationLink("Start",destination:Content().navigationBarBackButtonHidden(true))
                        
                          .font(.custom("Arial", size: 70))
+                         .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
+                         .bold()
                     
                 }
+                .toolbar{
+                    ToolbarItemGroup(placement: .principal){
+                        Text("GameAndGamePad")
+                            .foregroundColor(Color.black)
+                            .bold()
+                            .font(.largeTitle)
+                            
+                    }
+                }
                 
-                .navigationTitle("GameAndGamePad")
-                .bold()
-                .font(.largeTitle)
-                .padding(25)
-                .navigationBarTitleDisplayMode(.inline)
                 
                 
                
