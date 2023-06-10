@@ -10,7 +10,47 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.dismiss) private var dismiss
+    var body: some View {
+        
+            
+            
+            NavigationStack{
+                ZStack{
+                    let color1 = Color(red: 255/255, green: 216/255, blue: 155/255)
+                    let color2 = Color(red: 25/255, green: 84/255, blue: 123/255)
+                    LinearGradient(gradient: Gradient(colors: [color1, color2]), startPoint: .topLeading, endPoint: .bottomLeading)
+                        .ignoresSafeArea()
+                
+                VStack{
+                    NavigationLink("Start",destination:Content().navigationBarBackButtonHidden(true))
+                       
+                         .font(.custom("Arial", size: 70))
+                    
+                }
+                
+                .navigationTitle("GameAndGamePad")
+                .bold()
+                .font(.largeTitle)
+                .padding(25)
+                .navigationBarTitleDisplayMode(.inline)
+                
+                
+               
+              
+            }
+            
+        }
+       
+      
+       
+       
+    }
     
+   
+}
+struct Content: View {
+    @Environment(\.dismiss) private var dismiss
     @State private var ispressed:Bool=false
     @State private var direction:Bool=false
     
@@ -134,16 +174,39 @@ struct ContentView: View {
                         .padding(20)
                         Spacer()
                     }
+                    .toolbar {
+
+                              
+                        ToolbarItem(placement: .bottomBar) {
+
+                                        Button {
+                                          
+                                           dismiss()
+                                            close()
+                                            
+
+                                        } label: {
+                                            // 4
+                                            HStack {
+
+//                                                Image(systemName: "chevron.backward")
+                                                Text("close")
+                                                    .foregroundColor(Color(.red))
+                                            }
+                                        }
+                                    }
+                                }
                     
                     
                     
-                
-                
-            
-            
         }
        
+                
     }
+            
+        
+       
+    
        
    
     func ping() {
