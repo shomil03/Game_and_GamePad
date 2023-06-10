@@ -16,6 +16,8 @@ struct ContentView: View {
  
     let json = "[\n\"direction\" : \"true\",\n\"pressed\" : \"true\"\n]"
     @FocusState private var pressed:Bool
+    @State private var downstatus:Bool=false
+    @State private var upstatus:Bool=false
     
     
 
@@ -60,6 +62,7 @@ struct ContentView: View {
                
       
                 VStack{
+                    
                    
 
                     Button()
@@ -67,14 +70,17 @@ struct ContentView: View {
                         
                     }label:{
                         Label("UP",systemImage: "arrowtriangle.up.fill")
-                            .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
+                            .foregroundColor(upstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
+                            
                     }
+                    
                     .font(.custom("Arial", size: 70))
                     .simultaneousGesture(DragGesture(minimumDistance: 0).onChanged(
                                 {_ in
                                     button="UP"
                                     status=true
                                     direction=true
+                                    upstatus.toggle()
                                     send()
                                     
                                 })
@@ -82,6 +88,7 @@ struct ContentView: View {
                                     button="UP"
                                     status=false
                                     direction=true
+                                    upstatus.toggle()
                                     send()
                                 }))
                     .focused($pressed)
@@ -90,10 +97,13 @@ struct ContentView: View {
                   
                     Button()
                     {
+                        
                                                
                     }label:{
                         Label("Down",systemImage: "arrowtriangle.down.fill")
-                            .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
+//
+                            .foregroundColor(downstatus ? Color(red: 255/255, green: 216/255, blue: 155/255):Color(red: 20/255, green: 33/255, blue: 61/255))
+                        
                     }
                     .padding(35)
                     .font(.custom("Arial", size: 70))
@@ -102,6 +112,7 @@ struct ContentView: View {
                             button="Down"
                             status=true
                             direction=false
+                            downstatus.toggle()
 
                             send()
                         })
@@ -110,6 +121,7 @@ struct ContentView: View {
                             status=false
                             direction=false
                             send()
+                            downstatus.toggle()
 
                         }))
                     
