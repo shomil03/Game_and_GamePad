@@ -24,7 +24,7 @@ struct ContentView: View {
                 
                 VStack{
                     NavigationLink("Start",destination:Content().navigationBarBackButtonHidden(true))
-                       
+                         
                          .font(.custom("Arial", size: 70))
                          .foregroundColor(Color(red: 20/255, green: 33/255, blue: 61/255))
                          .bold()
@@ -36,6 +36,10 @@ struct ContentView: View {
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.largeTitle)
+                            .frame( maxWidth: .infinity, minHeight:30, maxHeight: 40)
+//                            .background()
+                            .padding(.top,40)
+                            
                             
                     }
                 }
@@ -56,6 +60,7 @@ struct ContentView: View {
    
 }
 struct Content: View {
+    
     @Environment(\.dismiss) private var dismiss
     @State private var ispressed:Bool=false
     @State private var direction:Bool=false
@@ -67,15 +72,16 @@ struct Content: View {
     @State private var upstatus:Bool=false
     
     
-
+    
     let session: URLSession
+    
     private var websocket: URLSessionWebSocketTask?
     private var delegate: WebSocketDelegate?
     
     init() {
         let configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
-        let url = URL(string: "ws://192.168.135.220:3000/player")!
+        let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/")!
         websocket = session.webSocketTask(with: url)
         delegate = WebSocketDelegate(websocket: websocket)
         websocket?.delegate = delegate
@@ -86,7 +92,9 @@ struct Content: View {
     
     @State var status:Bool=false
     var body: some View {
+        
         ZStack{
+           
                     
                     let color1 = Color(red: 255/255, green: 216/255, blue: 155/255)
                     let color2 = Color(red: 25/255, green: 84/255, blue: 123/255)
@@ -190,12 +198,13 @@ struct Content: View {
                                            dismiss()
                                             close()
                                             
+                                            
 
                                         } label: {
-                                            // 4
+                                            
                                             HStack {
 
-//                                                Image(systemName: "chevron.backward")
+
                                                 Text("close")
                                                     .foregroundColor(Color(.red))
                                             }
@@ -234,6 +243,8 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
     
     init(websocket: URLSessionWebSocketTask?) {
         self.websocket = websocket
+        super.init()
+        ping()
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
@@ -245,11 +256,17 @@ class WebSocketDelegate: NSObject, URLSessionWebSocketDelegate {
     }
     
     func ping() {
-        websocket?.sendPing { error in
-            if let error = error {
-                print("Ping error: \(error)")
-            }
-        }
+//        websocket?.sendPing { error in
+//            if let error = error {
+//                print("Ping error: \(error)")
+//            }
+//        }
+        let configuration = URLSessionConfiguration.default
+               let session = URLSession(configuration: configuration)
+               let url = URL(string: "wss://socketsbay.com/wss/v2/1/demo/")!
+               websocket = session.webSocketTask(with: url)
+               websocket?.delegate = self
+               websocket?.resume()
     }
     func close(){
         websocket?.cancel(with: .goingAway, reason: "Demo ended".data(using: .utf8))
